@@ -10,15 +10,51 @@ import UIKit
 
 private let sections: Int = 0
 private let numberOfItems = 5
+private let statusBarBackroundColor = UIColor.rgb(red: 194, green: 31, blue: 31);
+private let hometitle: String = "Home"
 
 class HomeViewController: UICollectionViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Home"
-        collectionView.backgroundColor = .white
+        setupTitle()
+        setupStatusBar()
+        setupCollectionView()
         
+    }
+    
+    func setupTitle() {
+        
+        navigationItem.title = hometitle
+               navigationController?.navigationBar.isTranslucent = false
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - 32,
+        height: view.frame.height))
+        titleLabel.text = hometitle
+        titleLabel.textColor  = .white
+        titleLabel.font = UIFont.systemFont(ofSize: 20)
+        navigationItem.titleView = titleLabel
+    }
+    
+    func  setupStatusBar() {
+        if #available(iOS 13, *)
+              {
+                  let statusBar = UIView(frame: (UIApplication.shared.keyWindow?.windowScene?.statusBarManager?.statusBarFrame)!)
+                  statusBar.backgroundColor = statusBarBackroundColor
+                  UIApplication.shared.keyWindow?.addSubview(statusBar)
+        } else {
+                 // ADD THE STATUS BAR AND SET A CUSTOM COLOR
+                 let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+                 if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
+                    statusBar.backgroundColor = statusBarBackroundColor
+                 }
+              }
+         navigationController?.navigationBar.barStyle = .black
+                setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    func setupCollectionView() {
+        collectionView?.backgroundColor = UIColor.white
         collectionView.register(VideoViewCell.self, forCellWithReuseIdentifier: VideoViewCell.identifier)
     }
     
@@ -51,6 +87,7 @@ class HomeViewController: UICollectionViewController{
 extension HomeViewController: UICollectionViewDelegateFlowLayout  {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 200)
+        let height = (view.frame.width - 16 - 16) * 9 / 16
+        return CGSize(width: view.frame.width, height: height + 16 + 68)
     }
 }

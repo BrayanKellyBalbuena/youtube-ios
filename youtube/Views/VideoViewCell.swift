@@ -13,7 +13,9 @@ class VideoViewCell: UICollectionViewCell {
     
     let thumbnailImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .blue
+        imageView.image = UIImage(named: "thumbnail_preview")
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
@@ -21,14 +23,16 @@ class VideoViewCell: UICollectionViewCell {
     
     let userProfileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .green
+        imageView.image = UIImage(named: "profile_image")
+        imageView.layer.cornerRadius = 22
+        imageView.layer.masksToBounds = true
         
         return imageView
     }()
     
     let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor(red: 230 / 255, green: 230 / 255, blue: 230 / 255, alpha: 1)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -36,18 +40,18 @@ class VideoViewCell: UICollectionViewCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .purple
         label.translatesAutoresizingMaskIntoConstraints = false
-        
+        label.text = "Better Previews with PreviewLayout"
         return label
     }()
     
-    let subTitleLabel : UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .red
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        return label
+    let subTitleTextView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.text = "Lets Build That App • 2.8K views 5 days ago"
+        textView.textContainerInset = UIEdgeInsets(top: 0, left: -4, bottom: 0, right: 0)
+        textView.textColor = .lightGray
+        return textView
     }()
     
     override init(frame: CGRect) {
@@ -64,7 +68,7 @@ class VideoViewCell: UICollectionViewCell {
         addSubview(separatorView)
         addSubview(userProfileImageView)
         addSubview(titleLabel)
-        addSubview(subTitleLabel)
+        addSubview(subTitleTextView)
         
         addConstraintsWithFormat(format: "H:|-16-[v0]-16-|", views: thumbnailImageView)
         addConstraintsWithFormat(format: "H:|-16-[v0(44)]", views: userProfileImageView)
@@ -75,14 +79,15 @@ class VideoViewCell: UICollectionViewCell {
         addConstraintsWithFormat(format: "H:|[v0]|", views: separatorView)
         
         // titleLabel constraint
-        NSLayoutConstraint.activate([titleLabel.topAnchor.constraint(equalTo: thumbnailImageView.bottomAnchor, constant: 8),
+        NSLayoutConstraint.activate([titleLabel.topAnchor.constraint(equalTo: thumbnailImageView.bottomAnchor, constant: 4),
                                      titleLabel.leadingAnchor.constraint(equalTo: userProfileImageView.trailingAnchor,constant: 8),
                                      titleLabel.trailingAnchor.constraint(equalTo: thumbnailImageView.trailingAnchor),
                                      titleLabel.heightAnchor.constraint(equalToConstant: 20)])
         
         // subtitle constraint
-        NSLayoutConstraint.activate([subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-                                     subTitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-                                     subTitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor), subTitleLabel.heightAnchor.constraint(equalTo: titleLabel.heightAnchor)])
+        NSLayoutConstraint.activate([subTitleTextView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+                                     subTitleTextView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+                                     subTitleTextView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+                                     subTitleTextView.heightAnchor.constraint(equalTo: titleLabel.heightAnchor, constant: 20)])
     }
 }
