@@ -24,7 +24,7 @@ class HomeViewController: UICollectionViewController{
         
     }
     
-    func setupTitle() {
+   private func setupTitle() {
         
         navigationItem.title = hometitle
                navigationController?.navigationBar.isTranslucent = false
@@ -36,7 +36,7 @@ class HomeViewController: UICollectionViewController{
         navigationItem.titleView = titleLabel
     }
     
-    func  setupStatusBar() {
+   private func  setupStatusBar() {
         if #available(iOS 13, *)
               {
                   let statusBar = UIView(frame: (UIApplication.shared.keyWindow?.windowScene?.statusBarManager?.statusBarFrame)!)
@@ -53,7 +53,7 @@ class HomeViewController: UICollectionViewController{
                 setNeedsStatusBarAppearanceUpdate()
     }
     
-    func setupCollectionView() {
+   private func setupCollectionView() {
         collectionView?.backgroundColor = UIColor.white
         collectionView.register(VideoViewCell.self, forCellWithReuseIdentifier: VideoViewCell.identifier)
     }
